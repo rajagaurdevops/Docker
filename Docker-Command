@@ -1,0 +1,98 @@
+# Docker Installation and Setup
+
+ docker --version                  :> Check the installed Docker version
+
+ docker info                       :> Display system-wide information about Docker
+
+ docker version                    :> Show detailed version information for Docker client and server
+
+
+# Docker Image Commands
+
+ docker pull [image-name]          :> Pull an image from Docker Hub or other registries
+
+ docker build [image-name]         :> Build an image from a Dockerfile
+
+ docker images                     :> List all images on your local machine
+
+ docker rmi [image-name]           :> Remove an image from the local machine
+
+ docker history [image-name]        :> Show the history of an image
+
+ docker tag [source_image] [target_image]     :> Tag an image with a new name
+ 
+
+# Docker Container Commands
+ docker ps                           :> List running containers
+
+ docker ps -a                        :> List all containers (running and stopped)
+
+ docker run [image-name]             :> Run a container from an image
+
+ docker start [container-id]         :> Start a stopped container
+
+ docker stop  [container-id]         :> Stop a running container
+
+ docker restart [container-id]       :> Restart a running or stopped container
+
+ docker pause   [container-id]        :> Pause a container’s processes
+
+ docker unpause [container-id]         :> Unpause a container’s processes
+
+ docker rm [container-id]                 :> Remove a stopped container
+
+ docker attach [container-id]             :> Attach to a running container’s main process
+
+ docker logs [container-id]               :> View the logs of a running or stopped container
+
+docker exec -it [container-id] [command]   :> Run a command inside a running container
+
+# Docker Networking Commands
+
+docker network ls                          :> List all Docker networks
+
+docker network inspect [network-id]        :> Inspect a specific network
+    
+docker network create [network_name]       :> Create a new network
+
+docker network rm [network_name]           :> Remove a network
+
+# Docker Volume Commands
+
+docker volume ls                           :> List all Docker volumes
+
+docker volume create [volume_name]         :> Create a new volume
+
+docker volume inspect [volume_name]        :> Inspect a volume
+
+docker volume rm [volume_name]             :> Remove a volume
+
+# Docker Compose Commands (for multi-container applications)
+
+docker-compose up                         :> Start services defined in a docker-compose.yml file
+
+docker-compose down                       :> Stop and remove all containers and networks created by docker-compose up
+
+docker-compose build                      :> Build images defined in docker-compose.yml
+
+docker-compose logs                       :> View logs of containers managed by Docker Compose
+
+docker-compose exec [service] [command]   :> Execute a command inside a running service 
+
+# Other Useful Docker Commands
+
+docker stats                              :> Show live resource usage stats for running containers
+
+docker info                               :> Display system-wide Docker information
+
+docker prune                              :> Remove unused Docker objects (images, containers, networks, etc.)
+
+docker save [image-name]                  :> Save an image to a tar archive
+
+docker load [file]                        :> Load an image from a tar archive
+
+
+
+
+
+
