@@ -91,8 +91,15 @@ docker save [image-name]                  :> Save an image to a tar archive
 
 docker load [file]                        :> Load an image from a tar archive
 
+        : docker cp [container_name_or_id]:/path/to/container/testing /path/to/local/destination :
+        
+        This command copies a file or directory from a Docker container to a local machine
+      
 
 
+       : sudo docker run -d --name [anythink-name] -p 80:80 -v /path/to/local/destination:/path/to/server/destination nginx :
+
+       This command runs an Nginx container in detached mode, with port 80 exposed, and mounts a local directory to the container
 
 
 

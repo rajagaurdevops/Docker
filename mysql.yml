@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: q     # Change this to your root password
+      MYSQL_DATABASE: testing            # Change this to your desired database name
+      MYSQL_USER: admin                    # Change this to your desired user name
+      MYSQL_PASSWORD: admin@123            # Change this to the password for the user
+    ports:
+      - "3707:3306"  # Map MySQL container port 3306 to host port 3707 (change as needed)
+    volumes:
+      - mysql_data:/var/lib/mysql  # Persist MySQL data across container restarts
+
+volumes:
+  mysql_data:
+    driver: local
+
+
+
+connect mysql   :>   mysql -u admin -padmin@123 -h 44.206.243.181 -P 3707 testing    

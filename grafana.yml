@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-container
+    ports:
+      - "80:80"   # HTTP port
+      - "443:443" # HTTPS port (agar SSL chahie)
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Nginx config file ko mount karna
+    networks:
+      - grafana_network
+    depends_on:
+      - grafana  # Grafana container ke start hone ka wait karega
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-container
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin   # Grafana ka admin password set karna
+    ports:
+      - "3000:3000"  # Grafana ka internal port
+    networks:
+      - grafana_network
+    volumes:
+      - grafana-data:/var/lib/grafana  # Persistent storage ke liye volume
+
+networks:
+  grafana_network:
+    driver: bridge  # Docker bridge network ke through communication hoga
+
+volumes:
+  grafana-data:
+    driver: local  # Grafana ka data persistent rahega
