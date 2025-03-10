@@ -1,6 +1,6 @@
 what is Docker
 
-Docker is an open-source platform that allows developers to build, package, and run applications inside. containers. Containers are lightweight, portable, and isolated environments that ensure an application. runs the same way on any system, without worrying about dependencies or configurations.
+1 Docker is an open-source platform that allows developers to build, package, and run applications inside. 1 containers. Containers are lightweight, portable, and isolated environments that ensure an application. 1 runs the same way on any system, without worrying about dependencies or configurations.
 
 Why Use Docker? 🤔
 
