@@ -18,3 +18,11 @@ key concept of docker
 4️ Docker Hub – A repository for storing and sharing Docker images.
 5️ Docker Compose – A tool to manage multiple containers at once.
 
+what is docker file
+
+A Dockerfile is a script containing a set of instructions used to create a Docker image
+
+what is docker image
+
+A Docker Image is a lightweight, standalone, and executable package that contains everything needed to run an application, including the code, runtime, libraries, dependencies, and system tools.
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e6ecf0;
+        }
+        .header {
+            background-color: #1DA1F2;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            width: 50%;
+            margin: 20px auto;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .tweet-box {
+            display: flex;
+            flex-direction: column;
+        }
+        .tweet-box textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            resize: none;
+        }
+        .tweet-box button {
+            background-color: #1DA1F2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .tweet-box button:hover {
+            background-color: #0d8cd8;
+        }
+        .tweet-feed {
+            margin-top: 20px;
+        }
+        .tweet {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .tweet .user {
+            font-weight: bold;
+            color: #1DA1F2;
+        }
+        .tweet .content {
+            margin-top: 5px;
+        }
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: gray;
+            margin-top: 5px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">Twitter</div>
+
+    <!-- Tweet Input Box -->
+    <div class="container">
+        <div class="tweet-box">
+            <textarea id="tweetInput" placeholder="What's happening?" maxlength="280"></textarea>
+            <div class="char-count"><span id="charCount">0</span>/280</div>
+            <button onclick="postTweet()">Tweet</button>
+        </div>
+    </div>
+
+    <!-- Tweets Feed -->
+    <div class="container tweet-feed" id="tweetFeed">
+        <div class="tweet">
+            <div class="user">@user1</div>
+            <div class="content">This is a sample tweet! 🚀</div>
+        </div>
+    </div>
+
+    <script>
+        function postTweet() {
+            let tweetInput = document.getElementById("tweetInput");
+            let tweetText = tweetInput.value.trim();
+            let tweetFeed = document.getElementById("tweetFeed");
+
+            if (tweetText.length > 0) {
+                let newTweet = document.createElement("div");
+                newTweet.classList.add("tweet");
+                newTweet.innerHTML = `
+                    <div class="user">@you</div>
+                    <div class="content">${tweetText}</div>
+                `;
+                tweetFeed.prepend(newTweet);
+                tweetInput.value = "";
+                document.getElementById("charCount").innerText = "0";
+            }
+        }
+
+        document.getElementById("tweetInput").addEventListener("input", function() {
+            document.getElementById("charCount").innerText = this.value.length;
+        });
+    </script>
+
+</body>
+</html>
+
