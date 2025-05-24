@@ -20,4 +20,3 @@ volumes:
 
 
 
-connect mysql   :>   mysql -u admin -padmin@123 -h 44.206.243.181 -P 3707 testing    
