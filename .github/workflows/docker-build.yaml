@@ -25,6 +25,7 @@ jobs:
       - name: Build and Push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./basic-app
+          file: ./basic-app/Dockerfile
           push: true
           tags: rajagaurdevops/node-app:latest
