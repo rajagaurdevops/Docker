@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -29,3 +30,7 @@ jobs:
           file: ./basic-app/Dockerfile
           push: true
           tags: rajagaurdevops/node-app:latest
+
+      - name: Verify Docker login
+        run: docker info
+
