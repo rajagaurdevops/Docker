@@ -17,7 +17,7 @@ jobs:
     - name: Generate Timestamp Tag
       id: vars
       run: |
-        TIMESTAMP=$(date +%Y%m%d%H%M%S)  # Example: 20250701134523
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)  
         echo "TAG=$TIMESTAMP" >> $GITHUB_ENV
 
     - name: Log in to Docker Hub
@@ -35,4 +35,4 @@ jobs:
     - name: Push to Docker Hub
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/flask-demo:${TAG}
-        docker push ${{ secrets.DOCKER_USERNAME }}/flask-demo:latest
+        
