@@ -6,7 +6,7 @@ on:
       - main   
     paths:
       - 'basic-python-app/**'
-     # - '.github/workflows/basic-python-app'
+      - '.github/workflows/basic-python-app'
 
   workflow_dispatch: 
 
