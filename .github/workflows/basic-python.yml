@@ -46,7 +46,7 @@ jobs:
       run: |
         docker push ${{ secrets.DOCKER_USERNAME }}/flask-demo:${TAG}  
 
-    # Clone the Helm chart Git repo, update values.yaml with the new tag
+    # Clone the Helm chart Git repo,update values.yaml with the new tag
     - name: Update Helm Chart (set tag to timestamp)
       run: |
         git clone git@github.com:${{ secrets.HELM_REPO }} flask-app-helmcharts
