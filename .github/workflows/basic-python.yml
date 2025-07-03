@@ -47,17 +47,13 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/flask-demo:${TAG}  
 
     # Clone the Helm chart Git repo,update values.yaml with the new tag
-
-    - name: Show HELM_REPO secret value
-      run: echo "${{ secrets.HELM_REPO }}"
-
     - name: Update Helm Chart (set tag to timestamp)
       run: |
         git clone git@github.com:${{ secrets.HELM_REPO }}.git
         cd Argo_CD/flask-app-helmcharts  
 
         # Update image tag in values.yaml
-        sed -i "s/tag: .*/tag: ${TAG}/" values.yaml 
+        sed -i "s/tag: .*/tag: \"${TAG}\"/" values.yaml 
 
        
         git config --global user.name "github-actions"
