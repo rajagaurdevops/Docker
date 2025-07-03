@@ -26,7 +26,7 @@ jobs:
         echo "TAG=$TIMESTAMP" >> $GITHUB_ENV  
         mkdir -p ~/.ssh
         echo "${{ secrets.HELM_REPO_SSH_KEY }}" > ~/.ssh/id_rsa 
-        chmod 400 ~/.ssh/id_rsa  
+        chmod 600 ~/.ssh/id_rsa  
         ssh-keyscan github.com >> ~/.ssh/known_hosts
 
     - name: Log in to Docker Hub
