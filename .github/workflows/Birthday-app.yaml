@@ -51,7 +51,7 @@ jobs:
     - name: Update Helm Chart (set tag to timestamp)
       run: |
         git clone git@github.com:${{ secrets.HELM_REPO }}.git
-        cd Argo_CD/flask-app-helmcharts  
+        cd Argo_CD/birthday-app  
 
         # Update image tag in values.yaml
         sed -i "s/tag: .*/tag: \"${TAG}\"/" values.yaml 
