@@ -3,6 +3,7 @@ version: "3.9"
 services:
   birthday-app:
     build: .
+    image: birthday-app:latest
     container_name: birthday-flask-app
     ports:
       - "5001:5001"
