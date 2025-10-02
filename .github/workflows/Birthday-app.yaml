@@ -1,0 +1,62 @@
+name:  BIRTHDAY-APP
+
+on:  
+  push:
+    branches:
+      - main  
+    paths:
+      - 'birthday-flask-project/**'  
+
+  workflow_dispatch: 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3 
+
+    # Generate a timestamp-based Docker tag and setup SSH for accessing Helm repo
+    - name: Generate Timestamp Tag
+      id: vars
+      run: |
+        TIMESTAMP=$(date +%Y%m%d%H%M%S) 
+        echo "TAG=$TIMESTAMP" >> $GITHUB_ENV  
+        mkdir -p ~/.ssh
+        echo "${{ secrets.HELM_REPO_SSH_KEY }}" > ~/.ssh/id_rsa 
+        chmod 600 ~/.ssh/id_rsa  
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    
+    - name: Build Docker Image with Timestamp 
+      run: |
+        cd birthday-flask-project  # Go to the app directory
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/birthday-app:${TAG} .  
+
+  
+    - name: Push Docker Image
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/flask-demo:${TAG}  
+
+    # Clone the Helm chart Git repo,update values.yaml with the new tag
+    - name: Update Helm Chart (set tag to timestamp)
+      run: |
+        git clone git@github.com:${{ secrets.HELM_REPO }}.git
+        cd Argo_CD/flask-app-helmcharts  
+
+        # Update image tag in values.yaml
+        sed -i "s/tag: .*/tag: \"${TAG}\"/" values.yaml 
+
+       
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+        git add .
+        git commit -m "Update image tag to ${TAG} from GitHub Actions"
+        git push origin main
