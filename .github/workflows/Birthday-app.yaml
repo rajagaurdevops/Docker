@@ -45,7 +45,7 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/flask-demo:${TAG}  
+        docker push ${{ secrets.DOCKER_USERNAME }}/birthday-app:${TAG}  
 
     # Clone the Helm chart Git repo,update values.yaml with the new tag
     - name: Update Helm Chart (set tag to timestamp)
