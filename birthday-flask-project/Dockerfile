@@ -21,3 +21,4 @@ ENV FLASK_RUN_PORT=5001
 
 # Run the app
 CMD ["python", "app.py"]
+
