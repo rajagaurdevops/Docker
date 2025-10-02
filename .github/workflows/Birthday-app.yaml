@@ -37,8 +37,11 @@ jobs:
     
     - name: Build Docker Image with Timestamp 
       run: |
-        cd birthday-flask-project  # Go to the app directory
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/birthday-app:${TAG} .  
+        cd birthday-flask-project 
+        docker-compose build
+        # Tag image for Docker Hub
+        docker tag birthday-flask-app:latest ${{ secrets.DOCKER_USERNAME }}/birthday-app:${TAG}
+        docker push ${{ secrets.DOCKER_USERNAME }}/birthday-app:${TAG}  
 
   
     - name: Push Docker Image
