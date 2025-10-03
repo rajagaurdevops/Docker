@@ -58,8 +58,8 @@ jobs:
         sed -i "s/tag: .*/tag: \"${TAG}\"/" values.yaml 
 
        
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
+        git config --global user.name "RajaGaur"
+        git config --global user.email "rajaGaur@github.com"
         git add .
         git commit -m "Update image tag to ${TAG} from GitHub Actions"
         git push origin main
