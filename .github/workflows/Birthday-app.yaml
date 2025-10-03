@@ -22,7 +22,8 @@ jobs:
       id: vars
       run: |
         TIMESTAMP=$(date +%Y%m%d%H%M%S) 
-        echo "TAG=$TIMESTAMP" >> $GITHUB_ENV  
+        UNIQUE_TAG=${{ github.sha }}-$TIMESTAMP
+        echo "TAG=$UNIQUE_TAG" >> $GITHUB_ENV  
         mkdir -p ~/.ssh
         echo "${{ secrets.HELM_REPO_SSH_KEY }}" > ~/.ssh/id_rsa 
         chmod 600 ~/.ssh/id_rsa  
