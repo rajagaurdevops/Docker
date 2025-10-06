@@ -1,17 +1,21 @@
 /* style.css - Enhanced Stylesheet for Student Management System */
 
-/* Global Styles */
+/* -----------------------------
+   Global Styles
+   Applies to all elements for consistent box sizing
+------------------------------ */
 * {
-    box-sizing: border-box;
+    box-sizing: border-box; /* Include padding and border in element's width/height */
 }
 
+/* Body and Typography */
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Clean, readable font */
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
-    line-height: 1.6;
+    background-color: #f4f4f4; /* Light gray background */
+    color: #333; /* Default text color */
+    line-height: 1.6; /* Improve readability */
 }
 
 h1 {
@@ -20,17 +24,21 @@ h1 {
     margin-bottom: 30px;
 }
 
-/* Container for Pages */
+/* -----------------------------
+   Container for Pages
+------------------------------ */
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
+    max-width: 1200px; /* Limit width for large screens */
+    margin: 0 auto; /* Center container */
+    background: white; /* White background for content */
     padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-/* Flash Messages */
+/* -----------------------------
+   Flash Messages (Success/Error Notifications)
+------------------------------ */
 .flash-messages {
     margin-bottom: 20px;
 }
@@ -53,7 +61,9 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* Buttons and Links */
+/* -----------------------------
+   Buttons and Links
+------------------------------ */
 .add-btn,
 .back-link,
 .actions a {
@@ -68,28 +78,29 @@ h1 {
 }
 
 .add-btn {
-    background: #007bff;
+    background: #007bff; /* Blue button */
     color: white;
 }
 
 .add-btn:hover {
-    background: #0056b3;
+    background: #0056b3; /* Darker blue on hover */
 }
 
 .back-link {
-    background: #6c757d;
+    background: #6c757d; /* Gray button */
     color: white;
     padding: 8px 15px;
     text-align: center;
 }
 
 .back-link:hover {
-    background: #545b62;
+    background: #545b62; /* Darker gray on hover */
     text-decoration: none;
 }
 
+/* Edit/Delete buttons in table */
 .actions .edit {
-    background: #28a745;
+    background: #28a745; /* Green */
     color: white;
     padding: 5px 10px;
     margin-right: 5px;
@@ -100,7 +111,7 @@ h1 {
 }
 
 .actions .delete {
-    background: #dc3545;
+    background: #dc3545; /* Red */
     color: white;
     padding: 5px 10px;
 }
@@ -109,11 +120,13 @@ h1 {
     background: #c82333;
 }
 
-/* Table Styles */
+/* -----------------------------
+   Table Styles
+------------------------------ */
 table {
     width: 100%;
     margin-top: 20px;
-    border-collapse: collapse;
+    border-collapse: collapse; /* Remove double borders */
     background: white;
 }
 
@@ -121,19 +134,20 @@ th,
 td {
     text-align: left;
     padding: 12px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ddd; /* Light gray border */
 }
 
 th {
-    background-color: #007bff;
+    background-color: #007bff; /* Blue header row */
     color: white;
     font-weight: bold;
 }
 
 tr:hover {
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* Highlight row on hover */
 }
 
+/* Style when there are no students */
 .no-students {
     text-align: center;
     color: #666;
@@ -144,11 +158,13 @@ tr:hover {
     border: 1px dashed #ddd;
 }
 
-/* Form Styles */
+/* -----------------------------
+   Form Styles
+------------------------------ */
 form {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 600px; /* Limit width of forms */
 }
 
 .form-group {
@@ -162,6 +178,7 @@ label {
     display: block;
 }
 
+/* Input fields */
 input[type="text"],
 input[type="submit"] {
     padding: 10px;
@@ -173,7 +190,7 @@ input[type="submit"] {
 
 input[type="text"]:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #007bff; /* Highlight border on focus */
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
@@ -190,6 +207,7 @@ input[type="submit"]:hover {
     background: #0056b3;
 }
 
+/* Display form errors */
 .error {
     color: #dc3545;
     font-size: 14px;
@@ -207,7 +225,9 @@ small {
     margin-top: 5px;
 }
 
-/* Responsive Design */
+/* -----------------------------
+   Responsive Design
+------------------------------ */
 @media (max-width: 768px) {
     body {
         padding: 10px;
@@ -218,6 +238,7 @@ small {
         margin: 10px;
     }
     
+    /* Convert table to block for mobile */
     table,
     thead,
     tbody,
@@ -227,9 +248,8 @@ small {
         display: block;
     }
     
-    /* Responsive Table for Mobile */
     thead tr {
-        position: absolute;
+        position: absolute; /* Hide header row */
         top: -9999px;
         left: -9999px;
     }
@@ -252,7 +272,7 @@ small {
     }
     
     td:before {
-        content: attr(data-label) ": ";
+        content: attr(data-label) ": "; /* Label for mobile */
         position: absolute;
         left: 6px;
         width: 45%;
@@ -262,9 +282,6 @@ small {
         font-weight: bold;
         color: #007bff;
     }
-    
-    /* Add data-label to table cells in HTML for mobile */
-    /* Example: <td data-label="ID">{{ student.id }}</td> */
     
     form {
         max-width: 100%;
@@ -279,7 +296,7 @@ small {
 
 @media (max-width: 480px) {
     h1 {
-        font-size: 1.5em;
+        font-size: 1.5em; /* Smaller heading on small screens */
     }
     
     .form-group {
