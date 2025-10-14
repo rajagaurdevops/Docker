@@ -1,4 +1,4 @@
-name: Birthday App
+name: Birthday App ECR
 
 on:  
   push:
