@@ -1,8 +1,8 @@
-from flask import Flask, url_for
+from flask import Flask
 
 app = Flask(__name__)
 
-# 🎶 Online Happy Birthday tune (loopable)
+# 🎶 Online Happy Birthday tune
 MUSIC_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
 
 # 🎈 Balloon colors
@@ -17,30 +17,26 @@ base_head = f"""
             margin:0; padding:0;
             font-family:'Roboto',sans-serif;
             overflow-x:hidden;
-            background: url('https://asset.gecdesigns.com/img/wallpapers/birthday-wishes-with-a-delicious-birthday-cake-background-sr17052504-cover.webp') no-repeat center center fixed;
-            background-size: 2000px 1400px;
         }}
         h1 {{
             font-family:'Pacifico',cursive;
-            font-size:60px;
-            margin-top:20px;
             color:#fff;
             text-shadow:2px 2px 8px rgba(0,0,0,0.3);
         }}
-        p {{ font-size:22px; color:#fff; }}
+        p {{ font-size:20px; color:#fff; }}
         a {{
             display:inline-block;
             margin:15px;
             padding:12px 25px;
-            font-size:20px;
+            font-size:18px;
             text-decoration:none;
             border-radius:30px;
             background:#fff;
             color:#ff4081;
-            transition:all 0.3s ease;
             box-shadow:0px 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }}
-        a:hover {{ background:#ff4081;color:#fff;transform:scale(1.05); }}
+        a:hover {{ background:#ff4081;color:#fff; transform:scale(1.05); }}
         .card {{
             background: rgba(0,0,0,0.5);
             border-radius: 20px;
@@ -50,9 +46,9 @@ base_head = f"""
             position: fixed;
             bottom: 30px;
             left: 30px;
-            z-index: 1;
             text-align: center;
             box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+            z-index:1;
         }}
         button {{
             margin-top: 20px;
@@ -92,11 +88,7 @@ base_head = f"""
     <script>
         function launchConfetti() {{
             setInterval(function(){{
-                confetti({{
-                    particleCount: 3,
-                    spread: 70,
-                    origin: {{y:0.6}}
-                }});
+                confetti({{ particleCount: 3, spread: 70, origin: {{y:0.6}} }});
             }}, 300);
         }}
 
@@ -126,52 +118,48 @@ base_head = f"""
 
         document.addEventListener("click", function() {{
             let audio = document.getElementById("music");
-            if (audio && audio.paused) {{
-                audio.play();
-            }}
+            if (audio && audio.paused) {{ audio.play(); }}
         }}, {{ once: true }});
     </script>
 </head>
 """
 
+# --- First page ---
 @app.route("/")
 def home():
-    # Home page card small
     return f"""
     <html>
         {base_head}
-        <body>
-            <div class="card">
-                <h1>🎂 Choose a Birthday Wish 🎉</h1>
-                <a href="/wish1">Wish 1</a>
-                <a href="/wish2">Wish 2</a>
-                <a href="/wish3">Wish 3</a>
+        <body style="background:#ff4081; display:flex; justify-content:center; align-items:center; height:100vh;">
+            <div style="text-align:center;">
+                <h1 style="font-size:60px;">🎂 Happy Birthday, Alex! 🎂</h1>
+                <a href="/wish1">➡ Next</a>
             </div>
         </body>
     </html>
     """
 
-def wish_page(title, message):
+# --- Second page ---
+def wish_page_img(title, message, next_url=None):
+    left_img_html = '<img src="https://wallpapers.com/images/hd/sad-person-pictures-3006-x-2214-2bnso9uiwlhrikrx.jpg" alt="Left" style="position:absolute; top:5px; left:8px; width:100px; opacity:0.6; filter: brightness(200%); border-radius:10px;">'
+    right_img_html = '<img src="https://wallpapers.com/images/hd/sad-person-pictures-3006-x-2214-2bnso9uiwlhrikrx.jpg" alt="Right" style="position:absolute; top:5px; right:8px; width:100px; opacity:0.6; filter: brightness(200%); border-radius:10px;">'
+    next_button_html = f'<a href="{next_url}">➡ Next</a>' if next_url else ''
+
     return f"""
     <html>
         {base_head}
-        <body>
-            <div class="card" style="position:fixed; bottom:30px; left:30px; width:500px; padding:50px;">
-                <!-- Top-left image inside the card with color adjusted -->
-                <img src="https://wallpapers.com/images/hd/sad-person-pictures-3006-x-2214-2bnso9uiwlhrikrx.jpg" 
-                     alt="Left Image" 
-                     style="position:absolute; top:5px; left:8px; width:100px; border-radius:10px; 
-                            box-shadow:0px 2px 6px rgba(0,0,0,0.3); opacity:0.6; filter: brightness(200%);">
-
-                <!-- Top-right image inside the card with color adjusted -->
-                <img src="https://wallpapers.com/images/hd/sad-person-pictures-3006-x-2214-2bnso9uiwlhrikrx.jpg" 
-                     alt="Right Image" 
-                     style="position:absolute; top:5px; right:8px; width:100px; border-radius:10px; 
-                            box-shadow:0px 2px 6px rgba(0,0,0,0.3); opacity:0.6; filter: brightness(200%);">
-
+        <body style="
+            background: url('https://asset.gecdesigns.com/img/wallpapers/birthday-wishes-with-a-delicious-birthday-cake-background-sr17052504-cover.webp') no-repeat center center fixed;
+            background-size: 2000px 1400px;
+            margin:0; padding:0;
+        ">
+            <div class="card">
+                {left_img_html}
+                {right_img_html}
                 <h1 style="font-size:36px;">{title}</h1>
                 <p style="font-size:20px;">{message}</p>
                 <a href="/">⬅ Back</a><br>
+                {next_button_html}<br>
                 <button onclick="playMusic()">🎶 Play Birthday Surprise!</button>
                 <audio id="music">
                     <source src="{MUSIC_URL}" type="audio/mpeg">
@@ -182,22 +170,51 @@ def wish_page(title, message):
     </html>
     """
 
-
-
 @app.route("/wish1")
 def wish1():
-    return wish_page("🎉🎂 Happy Birthday, Alex! 🎂🎉",
-                     "May your special day be filled with joy and laughter! 🥳")
+    return wish_page_img("🎉🎂 Happy Birthday, Alex! 🎂🎉",
+                         "May your special day be filled with joy and laughter! 🥳",
+                         next_url="/wish2")
 
 @app.route("/wish2")
 def wish2():
-    return wish_page("🌟 Happy Birthday, Alex! 🌟",
-                     "Wishing you endless happiness and success today and always! 🎁")
+    return wish_page_img("🌟 Happy Birthday, Alex! 🌟",
+                         "Wishing you endless happiness and success today and always! 🎁",
+                         next_url="/wish3")
 
+# --- Third page with background video ---
+# --- Third page with updated background video ---
 @app.route("/wish3")
 def wish3():
-    return wish_page("💖 Happy Birthday, Alex! 💖",
-                     "May your life be filled with love, health, and sweet surprises! 🎂✨")
+    left_img_html = '<img src="https://wallpapers.com/images/hd/sad-person-pictures-3006-x-2214-2bnso9uiwlhrikrx.jpg" alt="Left" style="position:absolute; top:5px; left:8px; width:100px; opacity:0.6; filter: brightness(200%); border-radius:10px;">'
+    right_img_html = '<img src="https://wallpapers.com/images/hd/sad-person-pictures-3006-x-2214-2bnso9uiwlhrikrx.jpg" alt="Right" style="position:absolute; top:5px; right:8px; width:100px; opacity:0.6; filter: brightness(200%); border-radius:10px;">'
+
+    return f"""
+    <html>
+        {base_head}
+        <body style="margin:0; padding:0; overflow:hidden;">
+            <!-- Background video -->
+            <video autoplay muted loop id="background-video" style="position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1;">
+                <source src="https://resource.flexclip.com/templates/video/720p/happy-birthday-pure-text-animation.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="card">
+                {left_img_html}
+                {right_img_html}
+                <h1 style="font-size:36px;">💖 Happy Birthday, Alex! 💖</h1>
+                <p style="font-size:20px;">May your life be filled with love, health, and sweet surprises! 🎂✨</p>
+                <a href="/wish2">⬅ Back</a><br>
+                <button onclick="playMusic()">🎶 Play Birthday Surprise!</button>
+                <audio id="music">
+                    <source src="{MUSIC_URL}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </body>
+    </html>
+    """
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
