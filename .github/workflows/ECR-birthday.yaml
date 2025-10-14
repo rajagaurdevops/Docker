@@ -1,0 +1,70 @@
+name: Birthday App
+
+on:  
+  push:
+    branches:
+      - main  
+    paths:
+      - 'birthday-flask-project/**'  
+  workflow_dispatch: 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest 
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3 
+
+    # Generate a timestamp-based Docker tag and setup SSH for Helm repo
+    - name: Generate Timestamp Tag
+      id: vars
+      run: |
+        TIMESTAMP=$(date +%Y%m%d%H%M%S) 
+        UNIQUE_TAG=${{ github.sha }}-$TIMESTAMP
+        echo "TAG=$UNIQUE_TAG" >> $GITHUB_ENV  
+        mkdir -p ~/.ssh
+        echo "${{ secrets.HELM_REPO_SSH_KEY }}" > ~/.ssh/id_rsa 
+        chmod 600 ~/.ssh/id_rsa  
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+    # Log in to AWS ECR
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Log in to ECR
+      run: |
+        aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
+        docker login --username AWS --password-stdin ${{ secrets.ECR_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+
+    - name: Build Docker Image with Timestamp 
+      run: |
+        cd birthday-flask-project 
+        docker compose build
+        IMAGE_URI=${{ secrets.ECR_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/birthday-app:${TAG}
+        docker tag birthday-app:latest $IMAGE_URI
+        echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
+    - name: Push Docker Image to ECR
+      run: |
+        docker push ${{ env.IMAGE_URI }}  
+
+    # Clone the Helm chart Git repo, update values.yaml with the new tag
+    - name: Update Helm Chart (set tag to ECR image)
+      run: |
+        git clone git@github.com:${{ secrets.HELM_REPO }}.git
+        cd Argo_CD/birthday-app  
+
+        # Update image tag in values.yaml
+        sed -i "s|repository: .*|repository: ${{ secrets.ECR_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/birthday-app|" values.yaml
+        sed -i "s|tag: .*|tag: \"${TAG}\"|" values.yaml 
+
+        git config --global user.name "RajaGaur"
+        git config --global user.email "rajaGaur@github.com"
+        git add .
+        git commit -m "Update image to ECR ${TAG} from GitHub Actions"
+        git push origin main
